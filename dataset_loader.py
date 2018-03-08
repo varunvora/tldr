@@ -3,7 +3,7 @@ from pickle import load
 from random import randrange
 data_file = open("dataset.pkl", "rb")
 x_master, y_master = load(data_file)
-del data_file
+data_file.close()
 
 #Verification
 print("Size of X : ", len(x_master))
