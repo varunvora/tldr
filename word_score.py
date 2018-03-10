@@ -20,13 +20,13 @@ def get_word_score(article_word_list, summary_word_list) :
 	P_Wi_given_Sw = Counter({word : summary_word_dict[word] / Ns for word in summary_word_dict})
 
 	# P(Sw)
-	P_Sw = Vs / (Va + Vs)
+	P_Sw = Ns / (Na + Ns)
 
 	# P(Wi)
 	P_Wi = Counter({word : (combined_dict[word]) / (Na + Ns) for word in combined_dict})
 
 	# P(Sw | Wi)
-	word_score = Counter({word : P_Wi_given_Sw[word] * P_Sw / P_Wi[word] for word in combined_dict})
+	word_score = Counter({word : P_Wi_given_Sw[word] * P_Sw / P_Wi[word] for word in article_word_dict})
 
 	print("Va: ", Va)
 	print("Vs: ", Vs)
