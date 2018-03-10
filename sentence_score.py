@@ -11,11 +11,18 @@ def sentence_score(sentence, word_score_dictionary, log_probability = False) :
 	if not log_probability :
 		return sum([word_score_dictionary[word] for word in context_words])/len(context_words)
 	else :
-		return sum([log(word_score_dictionary[word],2) for word in context_words])/len(context_words)
+		score = 0
+		total_context_words = len(context_words)
+		for word in context_words :
+			if word_score_dictionary[word] != 0 :
+				score += log(word_score_dictionary[word],2)
+			else :
+				total_context_words -= 1
+		return score / total_context_words
 
 def extractive_summarizer(article, word_score_dictionary, sentence_count = 10, log_probability = False) :
 	sentences = sent_tokenize(article)
-	sentences.sort(key = lambda x : sentence_score(x, word_score_dictionary), reverse = True)
+	sentences.sort(key = lambda x : sentence_score(x, word_score_dictionary, log_probability = log_probability), reverse = True)
 	chosen_sentences = set(sentences[:sentence_count])
 	summary = [sentence for sentence in sent_tokenize(article) if sentence in chosen_sentences]
 	return " ".join(summary)
