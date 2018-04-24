@@ -22,7 +22,7 @@ if __name__ == "__main__" :
 	fixed_x = []
 	for i in range(len(x)):
 		x[i].maketrans('','', string.punctuation)
-		if(len(x[i].split()) < 150):
+		if(len(x[i].split()) > 150):
 			ans = " ".join(e for e in x[i].split()[:100])
 			fixed_x.append(ans)
 		else:
@@ -42,5 +42,9 @@ if __name__ == "__main__" :
 				ans = " ".join(e for e in z)	
 				fixed_x.append(ans)
 	
+	a=[]			
+	for i in fixed_x:
+		a.append(len(i.split()))			
+	print(set(a))
 	with open('fixed_len_dataset.pkl','wb') as fp :
 		dump((fixed_x),fp)
