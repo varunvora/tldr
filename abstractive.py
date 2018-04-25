@@ -47,7 +47,7 @@ Instead, Trump flew to Moscow on a Bombardier Global 5000 private jet owned by P
 The jet -- tail number N443PR -- had flown from Las Vegas to Asheville on Nov. 6, according to the flight records that Bloomberg purchased from FlightAware, an aviation data company. The flight records don’t say who was aboard the jet, which took off from Asheville at 9:15 p.m. on Thursday, Nov. 7, bound for Moscow’s Vnukovo International Airport."
 """
 def abstractive_summarizer(article, word_score_dictionary, sentence_count = 4, log_probability = True) :
-	swap_erate=0.5
+	swap_erate=0.05
 	swap_prob = 0.05
 	remove_rate=0.1
 	unk_rate=0.05
@@ -55,14 +55,14 @@ def abstractive_summarizer(article, word_score_dictionary, sentence_count = 4, l
 	upper_lim=1 ##ending percentage after wich error should be avoided 
 	summary = extractive_summarizer(article, word_score_dictionary, sentence_count = 4, log_probability = True)
 	lsum=list(summary.split(" "));
-	#print(len(lsum))
-	while random.random() < swap_prob :
+#	print(lsum)
+	for _ in range(3):
 		swapping_indexes=random.sample(range(int(lower_lim*len(lsum)),int(upper_lim*len(lsum))),int(swap_erate*len(lsum)))
-	#print(swapping_indexes)
-		for i in swapping_indexes:
-			temp=lsum[i]
-			lsum[i]=lsum[i+1]
-			lsum[i+1]=temp
+#		print('lowde')
+	for i in swapping_indexes:
+		temp=lsum[i]
+		lsum[i]=lsum[i+1]
+		lsum[i+1]=temp
 	swapping_indexes=random.sample(range(int(lower_lim*len(lsum)),int(upper_lim*len(lsum))),int(remove_rate*len(lsum)))
 	for i in swapping_indexes:
 		lsum[i]=""
