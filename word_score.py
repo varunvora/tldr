@@ -28,10 +28,10 @@ def get_word_score(article_word_list, summary_word_list) :
 	# P(Sw | Wi)
 	word_score = Counter({word : P_Wi_given_Sw[word] * P_Sw / P_Wi[word] for word in article_word_dict})
 
-	print("Va: ", Va)
-	print("Vs: ", Vs)
-	print("Na: ", Na)
-	print("Ns: ", Ns)
+	# print("Va: ", Va)
+	# print("Vs: ", Vs)
+	# print("Na: ", Na)
+	# print("Ns: ", Ns)
 
 	return word_score
 
