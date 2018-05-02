@@ -38,8 +38,6 @@ if __name__ == "__main__" :
 		quit()
 	space = "---"*72 + "--"
 	ex_summary = extractive_summarizer(article, word_score_dictionary, sentence_count = 3)
-	ab_summary = abstractive_summarizer(article, word_score_dictionary, sentence_count = 3)
-	ab_summary = ' '.join(ab_summary.split()[:60])
 	
 	print(space)	
 	print("ARTICLE", article, sep = "\n")
@@ -49,8 +47,6 @@ if __name__ == "__main__" :
 		print("ACTUAL SUMMARY\n", actual_summary,  sep = "\n")
 		print(space)
 	print("EXTRACTIVE SUMMARY\n", ex_summary, sep = "\n")
-	print(space)
-	print("ABSTRACTIVE SUMMARY\n", ab_summary, sep = "\n")
 	print(space)
 	
 
