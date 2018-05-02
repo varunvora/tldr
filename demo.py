@@ -1,5 +1,6 @@
 from sentence_score import extractive_summarizer
 from abstractive import abstractive_summarizer
+from tfidf import ExtractiveSummarizer_tfidf
 from word_score import get_word_score
 from pickle import load
 from string import punctuation
@@ -37,7 +38,10 @@ if __name__ == "__main__" :
 		print("Invalid choice")
 		quit()
 	space = "---"*72 + "--"
+	
 	ex_summary = extractive_summarizer(article, word_score_dictionary, sentence_count = 3)
+	text_summarizer = ExtractiveSummarizer_tfidf(corpus = "clean_dataset")
+	ex_summary_2 = text_summarizer.tf_idf_summarizer(article, sentence_count = 3)
 	
 	print(space)	
 	print("ARTICLE", article, sep = "\n")
@@ -46,8 +50,11 @@ if __name__ == "__main__" :
 	if choice == "2" :
 		print("ACTUAL SUMMARY\n", actual_summary,  sep = "\n")
 		print(space)
-	print("EXTRACTIVE SUMMARY\n", ex_summary, sep = "\n")
-	print(space)
+	print("EXTRACTIVE SUMMARY USING BAYES\n", ex_summary, sep = "\n")
 	
+	print(space)
+	print("EXTRACTIVE SUMMARY USING TFIDF\n", ex_summary_2, sep = "\n")
+	print(space)
+		
 
 	
