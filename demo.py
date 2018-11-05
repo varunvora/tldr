@@ -1,60 +1,45 @@
-from sentence_score import extractive_summarizer
-from abstractive import abstractive_summarizer
 from tfidf import ExtractiveSummarizer_tfidf
-from word_score import get_word_score
-from pickle import load
-from string import punctuation
-from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
-from dataset_loader import load_dataset
-import sys
+from bayes import ExtractiveSummarizer_bayes
 import random
-from os import system
-porter = PorterStemmer()
+import pickle
 
-def load_keras_model() :
-	model = open("abstractive_model.h5")
-	weights = model.weights
-	return weights
+space = "---" * 72 + "--"
 
-if __name__ == "__main__" :
-	x, y = load_dataset()
-	seed = random.randrange(len(x))
-	with open('dataset.pkl', 'rb') as fp:
-		article_word_list, summary_word_list = load(fp)
+if __name__ == "__main__":
+    article, actual_summary = None, None
+    with open("dataset.pkl", "rb") as fp:
+        x, y = pickle.load(fp)
+    seed = random.randrange(len(x))
 
-	word_score_dictionary = get_word_score(article_word_list, summary_word_list)
-	system('figlet TLDR ')
-	choice = input("Choose one of the following\n1. New article\n2. Random article from dataset\nYour choice : ")
-	if choice == "1" :
-		f = open("article_file.txt", "r")
-		article = f.read()
-		f.close()
-		article = " ".join(article.split())
-	elif choice == "2" :
-		article = x[seed]
-		actual_summary = y[seed]
-	else :
-		print("Invalid choice")
-		quit()
-	space = "---"*72 + "--"
-	
-	ex_summary = extractive_summarizer(article, word_score_dictionary, sentence_count = 3)
-	text_summarizer = ExtractiveSummarizer_tfidf(corpus = "clean_dataset")
-	ex_summary_2 = text_summarizer.tf_idf_summarizer(article, sentence_count = 3)
-	
-	print(space)	
-	print("ARTICLE", article, sep = "\n")
-	print()
-	print(space)
-	if choice == "2" :
-		print("ACTUAL SUMMARY\n", actual_summary,  sep = "\n")
-		print(space)
-	print("EXTRACTIVE SUMMARY USING BAYES\n", ex_summary, sep = "\n")
-	
-	print(space)
-	print("EXTRACTIVE SUMMARY USING TFIDF\n", ex_summary_2, sep = "\n")
-	print(space)
-		
+    print("TLDR\n")
+    choice = input("Choose one of the following\n1. New article\n2. Random article from dataset\nYour choice : ")
+    if choice == "1":
+        f = open("article_file.txt", "r")
+        article = f.read()
+        f.close()
+        article = " ".join(article.split())
+    elif choice == "2":
+        article = x[seed]
+        actual_summary = y[seed]
+    else:
+        print("Invalid choice")
+        quit()
 
-	
+    bayes_summarizer = ExtractiveSummarizer_bayes(corpus="clean_dataset")
+    bayes_summary = bayes_summarizer.bayes_summarizer(article)
+
+    tfidf_summarizer = ExtractiveSummarizer_tfidf(corpus="clean_dataset")
+    tfidf_summary = tfidf_summarizer.tf_idf_summarizer(article)
+
+    print(space)
+    print("ARTICLE", article, sep="\n")
+    print()
+    print(space)
+    if choice == "2":
+        print("ACTUAL SUMMARY\n", actual_summary, sep="\n")
+        print(space)
+    print("EXTRACTIVE SUMMARY USING BAYES\n", bayes_summary, sep="\n")
+
+    print(space)
+    print("EXTRACTIVE SUMMARY USING TFIDF\n", tfidf_summary, sep="\n")
+    print(space)
