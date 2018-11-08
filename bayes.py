@@ -12,6 +12,11 @@ class ExtractiveSummarizer_bayes :
             self.article_word_list, self.summary_word_list = pickle.load(fp)
         self.word_score_dict = self.get_word_score(self.article_word_list, self.summary_word_list)
 
+#this is better
+#in face there should be one summarizer class and these 2 should inherit from it
+    #true
+    #and only one overloaded summarise() function yeah, but for AIR its enough no? yeah, i guess
+    #i'll push this
 
     def get_word_score(self, article_word_list, summary_word_list):
         Na = len(article_word_list)  # total number of words in the articles
@@ -32,7 +37,6 @@ class ExtractiveSummarizer_bayes :
         P_Wi = Counter({word: (combined_dict[word]) / (Na + Ns) for word in combined_dict})
         # P(Sw | Wi)
         word_score_dict = Counter({word: P_Wi_given_Sw[word] * P_Sw / P_Wi[word] for word in article_word_dict})
-
         return word_score_dict
 
 

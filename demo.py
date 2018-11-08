@@ -27,6 +27,7 @@ if __name__ == "__main__":
 
     bayes_summarizer = ExtractiveSummarizer_bayes(corpus="clean_dataset")
     bayes_summary = bayes_summarizer.bayes_summarizer(article)
+    #idk why it takes so long for you. because of the hashing, oh
 
     tfidf_summarizer = ExtractiveSummarizer_tfidf(corpus="clean_dataset")
     tfidf_summary = tfidf_summarizer.tf_idf_summarizer(article)

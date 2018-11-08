@@ -1,4 +1,5 @@
 import nltk
+import re
 from pickle import load , dump
 from nltk.corpus import stopwords
 
@@ -14,11 +15,11 @@ article_list = []
 summary_list = []
 
 for article_x in x_master:
-    words = list(filter(lambda x:x not in stop_words , map(lambda y:y.lower() , mytokenizer.tokenize(str(article_x)))))
+    words = list(filter(lambda x:x not in stop_words , map(lambda y:y.lower() , re.findall(r"\w+", article_x))))
     article_list.append(words)
 
 for summary_y in y_master:
-    words = list(filter(lambda x:x not in stop_words , map(lambda y:y.lower() , mytokenizer.tokenize(str(summary_y)))))
+    words = list(filter(lambda x:x not in stop_words , map(lambda y:y.lower() , re.findall(r"\w+", summary_y))))
     summary_list.append(words)
 
 print(article_list[0], summary_list[0], sep='\n')

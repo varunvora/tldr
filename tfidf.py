@@ -7,7 +7,7 @@ class ExtractiveSummarizer_tfidf :
 		with open(corpus + ".pkl", "rb") as fp :
 			self.corpus, temp = pickle.load(fp)
 		self.init_idf()
-
+#bad design, its ok good enough for an assignment. project
 	def init_idf(self) :
 		# number of documents
 		N = len(self.corpus)
