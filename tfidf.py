@@ -5,7 +5,7 @@ import pickle
 class ExtractiveSummarizer_tfidf :
 	def __init__(self, corpus = "clean_dataset") :
 		with open(corpus + ".pkl", "rb") as fp :
-			self.corpus = pickle.load(fp)
+			self.corpus, temp = pickle.load(fp)
 		self.init_idf()
 
 	def init_idf(self) :
@@ -15,16 +15,14 @@ class ExtractiveSummarizer_tfidf :
 		# document frequency - number of documents a particular word occurs in.
 		df = {}
 		for doc in self.corpus :
-			for sentence in doc :
-				for word in set(sentence) :
-					df[word] = df.get(word, 0) + 1
-
+			for word in doc : #after cleaning there is no such thing as sentence
+				#"Vishal is lodu. Kushal is not => [vishal, is, lodu...]
+				df[word] = df.get(word, 0) + 1
 		self.idf = {x : math.log(N / df[x], 10) for x in df}
 
 	def get_idf(self, word) :
 		N = len(self.corpus)
-		# unknown words have idf value = log10(N), can try 0 also
-		return self.idf.get(word, math.log(N, 10))
+		return self.idf.get(word, math.log(N))
 
 	def tf_idf_summarizer(self, text, sentence_count = 5) :
 		if sentence_count <= 0 :

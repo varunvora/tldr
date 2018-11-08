@@ -10,7 +10,7 @@ if __name__ == "__main__":
     with open("dataset.pkl", "rb") as fp:
         x, y = pickle.load(fp)
     seed = random.randrange(len(x))
-
+# you've to make changes in bayes.py
     print("TLDR\n")
     choice = input("Choose one of the following\n1. New article\n2. Random article from dataset\nYour choice : ")
     if choice == "1":

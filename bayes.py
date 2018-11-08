@@ -17,8 +17,8 @@ class ExtractiveSummarizer_bayes :
         Na = len(article_word_list)  # total number of words in the articles
         Ns = len(summary_word_list)  # total number of words in the summaries
 
-        article_word_dict = Counter(article_word_list)
-        summary_word_dict = Counter(summary_word_list)
+        article_word_dict = Counter(sum(article_word_list, []))
+        summary_word_dict = Counter(sum(summary_word_list, []))
         combined_dict = article_word_dict + summary_word_dict
 
         Va = len(article_word_dict)  # number of unique words in the articles
@@ -48,7 +48,7 @@ class ExtractiveSummarizer_bayes :
         summary = " ".join(summary).split()
         return " ".join(summary)
 
-
+# i think you should pickle word_score_dict also.
 if __name__ == "__main__" :
     text = """President Trump lashed out Tuesday at the publication of questions that special counsel Robert S. Mueller III was said to be interested in asking him as part of the Russia probe and possible attempts to obstruct the inquiry.
 
